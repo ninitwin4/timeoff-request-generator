@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Off Request Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .form-section {
+            flex: 1;
+            min-width: 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .result-section {
+            flex: 2;
+            min-width: 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            min-height: 400px;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            .form-section,
+            .result-section {
+                flex: 1;
+                width: 100%;
+            }
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            display: none;
+            height: fit-content;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h3 {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .result-text {
+            color: #555;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .copy-btn {
+            margin-top: 15px;
+            background: #28a745;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .copy-btn:hover {
+            background: #218838;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .emoji {
+            font-size: 32px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <span class="emoji">🏖️</span>
+            <h1>Time Off Request Generator</h1>
+            <span class="emoji">💼</span>
+        </div>
+        <p class="subtitle">Because "I need a break" isn't corporate enough</p>
+
+        <div class="content-wrapper">
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="reason">Reason for Time Off:</label>
+                    <select id="reason">
+                        <option value="">-- Select a reason --</option>
+                        <option value="mental">Mental Health Day (Netflix Marathon)</option>
+                        <option value="family">Family Emergency (Dog's Birthday)</option>
+                        <option value="medical">Medical Appointment (Hangover Recovery)</option>
+                        <option value="personal">Personal Development (Beach Research)</option>
+                        <option value="religious">Religious Observance (Worshipping Sleep)</option>
+                        <option value="moving">Moving Day (Moving to My Couch)</option>
+                        <option value="wedding">Attending a Wedding (My Own Vow Renewal with Sleep)</option>
+                        <option value="funeral">Funeral (RIP to My Motivation)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tone">Corporate Jargon Level:</label>
+                    <select id="tone">
+                        <option value="mild">Mild (Still Human)</option>
+                        <option value="medium">Medium (Middle Manager)</option>
+                        <option value="extreme">Extreme (Peak Synergy)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="days">Number of Days:</label>
+                    <input type="number" id="days" min="1" max="30" value="1">
+                </div>
+
+                <button onclick="generate()">Generate Request</button>
+            </div>
+
+            <div class="result-section">
+                <div class="result" id="result">
+                    <div class="result-text" id="resultText"></div>
+                    <button class="copy-btn" onclick="copyText()">Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const templates = {
+            mental: {
+                mild: "I need to take {days} for a mental health reset. I'll be back refreshed and ready to tackle our Q4 goals.",
+                medium: "I'm requesting {days} to recalibrate my cognitive bandwidth and optimize my mental capital for maximum productivity upon return.",
+                extreme: "I'm leveraging {days} to strategically realign my neurological assets and synergize my psychological KPIs to drive transformative mindshare in our value proposition ecosystem."
+            },
+            family: {
+                mild: "I need {days} off for an urgent family matter that requires my immediate attention.",
+                medium: "I'm requesting {days} to address a critical family-oriented stakeholder engagement that demands my physical presence and strategic oversight.",
+                extreme: "I require {days} to execute mission-critical family ecosystem optimization protocols that will enhance my work-life integration paradigm and maximize household stakeholder satisfaction metrics."
+            },
+            medical: {
+                mild: "I have a medical appointment that requires {days} for proper recovery and follow-up.",
+                medium: "I'm requesting {days} to address a health optimization initiative that will enhance my operational capacity and minimize future productivity disruptions.",
+                extreme: "I need {days} to implement a comprehensive biometric recalibration strategy that aligns with my personal wellness roadmap and ensures sustained high-performance deliverables in our go-forward strategy."
+            },
+            personal: {
+                mild: "I'm taking {days} for personal development and self-care.",
+                medium: "I'm requesting {days} to pursue professional enrichment opportunities that will directly benefit my contribution to team objectives.",
+                extreme: "I require {days} to execute a transformative self-actualization sprint that will amplify my innovative thinking capacity and catalyze breakthrough ideation for our strategic initiatives."
+            },
+            religious: {
+                mild: "I'm observing a religious holiday and need {days} off.",
+                medium: "I'm requesting {days} to honor spiritual commitments that are integral to my holistic work-life balance framework.",
+                extreme: "I require {days} to engage in mission-critical spiritual alignment activities that will optimize my values-driven decision-making capabilities and enhance cross-functional collaboration synergies."
+            },
+            moving: {
+                mild: "I'm moving and need {days} to get settled into my new place.",
+                medium: "I'm requesting {days} to execute a residential relocation project that requires comprehensive logistics coordination and stakeholder management.",
+                extreme: "I need {days} to implement a transformative domicile migration strategy involving multi-phase asset deployment and optimal spatial configuration to maximize my remote work productivity infrastructure."
+            },
+            wedding: {
+                mild: "I'm attending a wedding and need {days} off.",
+                medium: "I'm requesting {days} to participate in a significant life-cycle celebration event that represents an important networking and relationship-building opportunity.",
+                extreme: "I require {days} to engage in a high-value ceremonial partnership formalization event that will strengthen my personal brand ecosystem and create synergistic alliance-building opportunities."
+            },
+            funeral: {
+                mild: "I need {days} to attend a funeral and support my family during this difficult time.",
+                medium: "I'm requesting {days} to participate in end-of-life commemorative proceedings and provide stakeholder support during this transitional period.",
+                extreme: "I require {days} to execute grief management protocols and facilitate legacy celebration initiatives while maintaining optimal emotional bandwidth for our organizational commitments."
+            }
+        };
+
+        function generate() {
+            const reason = document.getElementById('reason').value;
+            const tone = document.getElementById('tone').value;
+            const days = document.getElementById('days').value;
+
+            if (!reason) {
+                alert('Please select a reason for time off!');
+                return;
+            }
+
+            const dayText = days == 1 ? 'day' : 'days';
+            let template = templates[reason][tone];
+            template = template.replace('{days}', `${days} ${dayText}`);
+
+            const fullMessage = `Hi Team,\n\n${template}\n\nThanks for understanding.`;
+
+            const result = document.getElementById('result');
+            const resultText = document.getElementById('resultText');
+            
+            resultText.textContent = fullMessage;
+            result.classList.add('show');
+            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyText() {
+            const text = document.getElementById('resultText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
